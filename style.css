@@ -82,6 +82,7 @@ section{
 }
 
 span{
+    z-index: 1;
     position: absolute;
     top: 50vh;
     left: 50vw;
