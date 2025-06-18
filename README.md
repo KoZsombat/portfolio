@@ -1,1 +1,1 @@
-https://teal-travesseiro-bcdc0b.netlify.app/
+https://kozsombat.netlify.app/
