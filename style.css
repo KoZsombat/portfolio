@@ -44,6 +44,7 @@ body{
 /*Sections*/
 
 #home {
+    position: relative;
     width: 100vw;
     height: 100vh;
     background: var(--background-color);
