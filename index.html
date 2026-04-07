@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio of Zsombor Kovacs - software developer showcasing projects, recent GitHub activity, and contact links.">
+    <title>Zsombor Kovács</title>
+    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css?v=1.2">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">
+</head>
+<body>
+    <a class="skip-link" href="#home" data-i18n="skip.link">Skip to main content</a>
+    <header>
+        <nav>
+            <a href="#achievements-title" data-i18n="nav.achievements">Achievements</a>
+            <a href="#timeline-title" data-i18n="nav.timeline">Schools & Jobs</a>
+            <a href="#project" data-i18n="nav.projects">My Projects</a>
+            <div class="lang-switch" role="group" aria-label="Language switcher">
+                <button type="button" class="lang-btn" data-lang="hu" aria-pressed="false">HU</button>
+                <button type="button" class="lang-btn" data-lang="en" aria-pressed="true">EN</button>
+            </div>
+        </nav>
+        <hr>
+    </header>
+    <main id="home">
+        <h1 data-i18n="hero.greeting" data-i18n-html="true">Hello, I'm <span class="phone-name">Zsombor</span></h1>
+        <h3 data-i18n="hero.role">Software Developer</h3>
+        <div class="about">
+            <p><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Budapest</p>
+            <p><i class="fa-solid fa-cake-candles" aria-hidden="true"></i> <span id="age-value"></span></p>
+        </div>
+        <div class="navbar">
+            <a href="https://www.linkedin.com/in/zsombor--kovacs/" target="_blank" rel="noopener noreferrer" data-i18n-aria-label="social.linkedin.aria"><i class="devicon-linkedin-plain" aria-hidden="true"></i><span data-i18n="social.linkedin">LinkedIn</span></a>
+            <a href="https://github.com/KoZsombat" target="_blank" rel="noopener noreferrer" data-i18n-aria-label="social.github.aria"><i class="devicon-github-original" aria-hidden="true"></i><span data-i18n="social.github">GitHub</span></a>
+            <!-- <a href="src/cv.pdf" download="Zsombor-Kovacs-CV.pdf" data-i18n-aria-label="social.cv.aria"><i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i><span data-i18n="social.cv">CV</span></a> -->
+            <a href="mailto:kovacszsombor12345@gmail.com" data-i18n-aria-label="social.email.aria"><i class="fa-regular fa-envelope" aria-hidden="true"></i><span data-i18n="social.email">Email</span></a>
+        </div>
+    </main>
+    <section class="achievements-section" aria-labelledby="achievements-title">
+        <h2 id="achievements-title" data-i18n="section.achievements">Achievements</h2>
+        <hr>
+        <div id="ach-holder"></div>
+    </section>
+    <section class="timeline-section" aria-labelledby="timeline-title">
+        <h2 id="timeline-title" data-i18n="section.timeline">Schools & Jobs</h2>
+        <hr>
+        <div class="timeline-grid">
+            <article class="timeline-column" aria-labelledby="schools-title">
+                <h3 class="timeline-subtitle" id="schools-title" data-i18n="section.schools">Schools</h3>
+                <div id="school-holder"></div>
+            </article>
+            <article class="timeline-column" aria-labelledby="jobs-title">
+                <h3 class="timeline-subtitle" id="jobs-title" data-i18n="section.jobs">Jobs</h3>
+                <div id="job-holder"></div>
+            </article>
+        </div>
+    </section>
+    <section class="projects-section" aria-labelledby="project">
+        <h2 id="project" data-i18n="section.projects">My Projects</h2>
+        <hr>
+        <div id="prj-holder"></div>
+        <button id="projects-more" class="projects-more" type="button" data-i18n="projects.showMore" aria-controls="projects-modal" aria-haspopup="dialog"></button>
+    </section>
+    <dialog id="projects-modal" class="projects-modal" aria-labelledby="projects-modal-title">
+        <div class="projects-modal__panel">
+            <div class="projects-modal__header">
+                <h2 id="projects-modal-title" data-i18n="projects.modalTitle">All Projects</h2>
+                <button id="projects-modal-close" class="projects-modal__close" type="button" data-i18n="projects.close" data-i18n-aria-label="projects.close">Close</button>
+            </div>
+            <div id="projects-modal-holder" class="projects-modal__content"></div>
+        </div>
+    </dialog>
+    <dialog id="image-viewer" class="image-viewer" aria-labelledby="image-viewer-title">
+        <div class="image-viewer__panel">
+            <h2 id="image-viewer-title" class="image-viewer__title">Project preview</h2>
+            <button id="image-viewer-close" class="image-viewer__close" type="button" data-i18n="imageViewer.close" data-i18n-aria-label="imageViewer.close">Close</button>
+            <img id="image-viewer-img" class="image-viewer__img" src="" alt="">
+        </div>
+    </dialog>
+    <aside>
+        <h2 id="repos" data-i18n="section.recent">Recent Activities</h2>
+        <hr>
+        <div id="results" role="feed" aria-busy="true" aria-live="polite"></div>
+    </aside>
+</body>
+<script src="script.js"></script>
+</html>

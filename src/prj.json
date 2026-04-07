@@ -1,0 +1,35 @@
+{"prj": [
+    {"name":"Filc",
+    "name_hu":"Filc",
+    "stack":["React","TS"],
+    "stack_hu":["React","TS"],
+    "stackimg":["devicon-react-original","devicon-typescript-plain"],
+    "desc":"A school app for students to get information (timetable, substitutions, announcements). I only contributed to this project; it is not my own.",
+    "desc_hu":"Iskolai app diákoknak informálódás céljából (órarend, helyettesítések, felhívások). Ebben a projektben csak segítettem, nem az én projektem.",
+    "img":"./img/filc.png", 
+    "link":"", 
+    "github":"https://github.com/filcdev/filc"},
+
+    {"name":"Nutrition App",
+    "name_hu":"Táplálkozás App",
+    "stack":["React","Tailwind CSS","Express.js"],
+    "stack_hu":["React","Tailwind CSS","Express.js"],
+    "stackimg":["devicon-react-original","devicon-tailwindcss-plain","devicon-nodejs-plain"],
+    "desc":"A comprehensive app for nutrition tracking and meal planning. Built as a React PWA, it works smoothly across devices, syncs data in real time, and keeps users motivated with goal-based streaks.",
+    "desc_hu":"Egy átfogó alkalmazás a táplálkozás követéséhez és az étkezések megtervezéséhez. React alapú PWA-ként több eszközön is kényelmesen használható, valós időben szinkronizálja az adatokat, és célalapú streakekkel motiválja a felhasználókat.",
+    "img":"./img/nutrition.png",
+    "link":"https://nutrition.zsombor.dev", 
+    "github":"https://github.com/KoZsombat/nutrition-app"},
+
+    {"name":"Quiz App",
+    "name_hu":"Kvíz App",
+    "stack":["React","Tailwind CSS","Express.js"],
+    "stack_hu":["React","Tailwind CSS","Express.js"],
+    "stackimg":["devicon-react-original","devicon-tailwindcss-plain","devicon-nodejs-plain"],
+    "desc":"A real-time, Kahoot-style quiz platform where users can create, host, and play quizzes with others.",
+    "desc_hu":"Valós idejű, Kahoot-stílusú kvízplatform, ahol a felhasználók kvízeket hozhatnak létre, vezethetnek és együtt játszhatnak.",
+    "img":"./img/quiz.png",
+    "link":"", 
+    "github":"https://github.com/KoZsombat/quiz"}
+
+]}

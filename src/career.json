@@ -1,0 +1,14 @@
+{
+  "schools": [
+    {
+      "title": "BMSZC Petrik Lajos Bilingual Technical School",
+      "title_hu": "BMSZC Petrik Lajos Két Tanítási Nyelvű Technikum",
+      "meta": "2022 - Present",
+      "meta_hu": "2022 - Jelenleg",
+      "desc": "IT-focused studies while building practical projects and improving development skills.",
+      "desc_hu": "IT fókuszú tanulmányok, miközben gyakorlati projekteket építek és folyamatosan fejlesztem a szakmai készségeimet.",
+      "icon": "fa-solid fa-school"
+    }
+  ],
+  "jobs": []
+}

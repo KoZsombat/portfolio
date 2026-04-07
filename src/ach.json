@@ -1,0 +1,13 @@
+{
+  "achievements": [
+    {
+      "title": "National EuroSkills 2027 Finalist",
+      "title_hu": "EuroSkills 2027 országos döntős",
+      "meta": "Competition Achievement",
+      "meta_hu": "Versenyeredmény",
+      "desc": "Achieved 3rd place at the EuroSkills 2027 national finals, demonstrating consistent performance and technical growth.",
+      "desc_hu": "Harmadik lettem az EuroSkills 2027 országos döntőjében, ami a folyamatos fejlődésemet és stabil technikai teljesítményemet mutatja.",
+      "icon": "fa-solid fa-trophy"
+    }
+  ]
+}
