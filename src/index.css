@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@theme {
+  /* Backgrounds, darkest to lightest.
+     Use as bg-page, bg-card, bg-card-hover, bg-thumb. */
+  --color-page: #171717; /* page behind everything (neutral-900) */
+  --color-card: #1f1f1f; /* cards */
+  --color-card-hover: #242424; /* cards while hovered */
+  --color-thumb: #262626; /* project thumbnail areas (neutral-800) */
+
+  /* Borders and dividers, faintest to most visible.
+     Use as border-line, border-line-strong, etc. */
+  --color-line: #2c2c2c; /* card borders, dividers, progress bar track */
+  --color-line-strong: #333333; /* tag and email-field borders */
+  --color-line-hover: #525252; /* any border while hovered, checkboxes (neutral-600) */
+  --color-line-on-light: #c4c4c4; /* input borders inside the light card */
+
+  /* Text on dark backgrounds, most to least prominent.
+     Use as text-fg, text-fg-soft, text-fg-muted, text-fg-faint. */
+  --color-fg: #f5f5f5; /* headings and body text; also the light card's fill (neutral-100) */
+  --color-fg-soft: #d4d4d4; /* slightly toned-down body text (neutral-300) */
+  --color-fg-muted: #a3a3a3; /* descriptions, secondary info (neutral-400) */
+  --color-fg-faint: #8a8a8a; /* labels, captions, small print */
+  --color-white: #ffffff;
+
+  /* Text inside the light card (dark on light). */
+  --color-on-light: #171717; /* main text */
+  --color-on-light-muted: #525252; /* secondary text */
+
+  /* Decorative shapes drawn inside thumbnails (neutral-200). */
+  --color-pattern: #e5e5e5;
+
+  --font-sans: "Geist", system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, monospace;
+
+  /* Corner rounding. Use as rounded-card, rounded-chip. */
+  --radius-card: 20px; /* cards */
+  --radius-chip: 16px; /* tags and pill buttons */
+}
+
+:root {
+  background-color: var(--color-page);
+  background-image: radial-gradient(
+    rgb(255 255 255 / 0.055) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+  color: var(--color-fg);
+}
