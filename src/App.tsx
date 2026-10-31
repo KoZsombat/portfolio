@@ -1,33 +1,6 @@
 import Card from "./components/Card";
 import LocalTime from "./components/LocalTime";
-
-const STACK = [
-  {
-    label: "Languages",
-    items: ["JavaScript", "TypeScript", "Python", "Go", "C#", "Kotlin"],
-  },
-  { label: "Frontend", items: ["React", "Tailwind CSS"] },
-  { label: "Backend", items: ["Express", "NestJS"] },
-  { label: "Tools", items: ["Docker", "Git"] },
-];
-
-const SOCIALS = [
-  {
-    name: "GitHub",
-    href: "https://github.com/kozsombat",
-    handle: "@kozsombat",
-  },
-  {
-    name: "LinkedIn",
-    href: "https://www.linkedin.com/in/zsombor--kovacs/",
-    handle: "in/zsombor--kovacs",
-  },
-  {
-    name: "Email",
-    href: "mailto:kovacszsombor1234@gmail.com",
-    handle: "kovacszsombor1234@gmail.com",
-  },
-];
+import { STACK, SOCIALS } from "./lib/CONSTANTS";
 
 function App() {
   const date = new Date();
@@ -54,9 +27,10 @@ function App() {
                   on it.
                 </h1>
                 <p className="mt-auto max-w-xl text-base leading-relaxed sm:text-lg text-fg-muted">
-                  I'm still building this site, so some parts are unfinished.
-                  Projects, writing and ways to reach me are coming soon. Check
-                  back in a little while.
+                  I'm still building this site, so some parts are unfinished. My
+                  school and work history, projects, competition results and
+                  some of the effects are still in progress. Check back in a
+                  little while.
                 </p>
               </div>
             </Card>
