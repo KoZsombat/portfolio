@@ -52,7 +52,6 @@ export const PROJECTS = [
     tags: ["Go", "TypeScript", "React 19"],
     repo: "",
     live: "",
-    pinned: true,
   },
   {
     name: "nutrition-app",
@@ -63,7 +62,6 @@ export const PROJECTS = [
     tags: ["TypeScript", "React 19", "Express 5"],
     repo: "https://github.com/KoZsombat/nutrition-app",
     live: "https://nutrition.zsombor.dev",
-    pinned: true,
   },
   {
     name: "filc",
@@ -74,7 +72,6 @@ export const PROJECTS = [
     tags: ["TypeScript", "React 19"],
     repo: "https://github.com/filcdev/filc",
     live: "https://filc.petrik.hu",
-    pinned: true,
   },
   {
     name: "QuitLARP",
@@ -84,7 +81,6 @@ export const PROJECTS = [
     role: "Built much of the frontend: the dashboard, landing and pricing pages, navbars, the assessment preview page, the branding and ASCII desert backgrounds, and the Monaco theme. I made every page responsive on mobile, and set up the gVisor sandbox daemon with a pinned, checksum-verified release.",
     tags: ["Go", "TypeScript", "React"],
     repo: "https://github.com/Church-of-the-LARP/QuitLARP",
-    pinned: true,
   },
   {
     name: "give-go",
@@ -95,7 +91,6 @@ export const PROJECTS = [
     tags: ["TypeScript", "Next.js 16"],
     repo: "https://github.com/give-go-2026/give-go",
     live: "https://givego.hu",
-    pinned: true,
   },
 ];
 

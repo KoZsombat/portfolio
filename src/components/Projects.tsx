@@ -1,9 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Card from "./Card";
 import TechBadge from "./TechBadge";
-import { PROJECTS as ALL } from "../lib/CONSTANTS";
-
-const PROJECTS = ALL.filter((p) => p.pinned);
+import { PROJECTS } from "../lib/CONSTANTS";
 
 // Bento layout on a 6-column grid, three rows of equal height.
 // Row 1: 4 + 2, row 2: 2 + 4, row 3: 4 + 2 (GitHub link card).
