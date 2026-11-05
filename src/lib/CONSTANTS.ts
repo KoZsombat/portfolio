@@ -1,3 +1,6 @@
+// Resolves a public/ file against the deploy base (e.g. /portfolio/ on GitHub Pages).
+const asset = (p: string) => `${import.meta.env.BASE_URL}${p}`;
+
 export const STACK = [
   {
     label: "Languages",
@@ -55,7 +58,7 @@ export const PROJECTS = [
   },
   {
     name: "nutrition-app",
-    images: ["/projects/nutrition.png"],
+    images: [asset("projects/nutrition.png")],
     description:
       "A full-stack nutrition tracker for logging meals and hitting your macro and water goals. You add the ingredients you eat with their macros, combine them into reusable meals and log them with a tap, while calories, protein, carbs and fat are tracked against targets you set yourself. It also tracks water and optional creatine with a daily streak, supports email or Google sign-in, and installs as a PWA with light and dark themes.",
     role: "My own project, built end to end: the PostgreSQL schema, the Express API routes, authentication, the React frontend and the production deployment behind Caddy.",
@@ -65,7 +68,7 @@ export const PROJECTS = [
   },
   {
     name: "filc",
-    images: ["/projects/filc.png"],
+    images: [asset("projects/filc.png")],
     description:
       "The application stack behind my school's digital platform. Chronos is the API server, with auth, scheduled jobs and the database, and Iris is the web frontend. Together they handle timetables, lesson substitutions, announcements, user management and door-lock activity, in Hungarian and English, plus kiosk displays and a 3D campus navigator. It's a Bun and Turborepo monorepo with a shared, typed API contract.",
     role: "Contributed to the frontend: the substitution dialog (including merging lessons), the timetable import dialog, announcement visibility, user management with cohorts and sorting, filters, the door-lock chart, the mobile timetable view and the Hungarian translations.",
@@ -84,7 +87,7 @@ export const PROJECTS = [
   },
   {
     name: "give-go",
-    images: ["/projects/give-go.png", "/projects/give-go-full.png"],
+    images: [asset("projects/give-go.png"), asset("projects/give-go-full.png")],
     description:
       "A Hungarian volunteering platform that connects organizations with volunteers. People can browse and search events, apply to them and sign up for a newsletter, and organizations can publish their own events through a three-step creation wizard with images and job types. It runs on Next.js with Better Auth and a Neon Postgres database, and is deployed on Vercel.",
     role: "Built the authentication flow (login, registration, validation), the event creation UI with picture upload, the organizer dashboard, the email template and the contact and impressum pages.",

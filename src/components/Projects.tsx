@@ -288,6 +288,41 @@ export default function Projects({ onClose }: { onClose: () => void }) {
   } | null>(null);
   const open = (p: Project, el: HTMLElement) =>
     setSelected({ project: p, from: el.getBoundingClientRect() });
+  const grid = useRef<HTMLDivElement>(null);
+
+  // Start with the first card focused so the keyboard works right away.
+  useEffect(() => {
+    (grid.current?.children[0] as HTMLElement | undefined)?.focus();
+  }, []);
+
+  // Esc goes back to the previous view (the dialog handles its own Esc).
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && !selected) onClose();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [selected, onClose]);
+
+  // Arrow keys move focus across the bento grid (rows: 0-1, 2-3, 4-link).
+  const onGridKey = (e: React.KeyboardEvent) => {
+    const items = Array.from(grid.current?.children ?? []) as HTMLElement[];
+    const cur = items.indexOf(document.activeElement as HTMLElement);
+    if (cur < 0) return;
+    const wide = window.matchMedia("(min-width: 768px)").matches;
+    const step = wide ? 2 : 1;
+    const delta: Record<string, number> = {
+      ArrowRight: 1,
+      ArrowLeft: -1,
+      ArrowDown: step,
+      ArrowUp: -step,
+    };
+    const d = delta[e.key];
+    if (!d) return;
+    e.preventDefault();
+    items[Math.min(items.length - 1, Math.max(0, cur + d))]?.focus();
+  };
+
   const backClass =
     "group flex items-center justify-center gap-3 rounded-xl border border-line bg-card px-4 py-4 text-3xl leading-none font-semibold tracking-tight text-fg-muted transition-colors hover:border-line-hover hover:bg-card-hover hover:text-fg sm:text-4xl";
   const backInner = (
@@ -317,7 +352,11 @@ export default function Projects({ onClose }: { onClose: () => void }) {
         </Card>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:auto-rows-[clamp(11rem,calc((100vh-15rem)/3),14rem)] md:grid-cols-6">
+      <div
+        ref={grid}
+        onKeyDown={onGridKey}
+        className="grid grid-cols-1 gap-4 md:auto-rows-[clamp(11rem,calc((100vh-15rem)/3),14rem)] md:grid-cols-6"
+      >
         {PROJECTS.map((p, i) => (
           <Card
             key={p.name}
@@ -330,7 +369,7 @@ export default function Projects({ onClose }: { onClose: () => void }) {
                 open(p, e.currentTarget);
               }
             }}
-            className={`cursor-pointer flex-col overflow-hidden p-0! transition-colors hover:border-line-hover hover:bg-card-hover ${SPANS[i % SPANS.length]} flex ${
+            className={`cursor-pointer flex-col overflow-hidden p-0! outline-none transition-colors focus-visible:border-fg focus-visible:bg-card-hover focus-visible:ring-2 focus-visible:ring-fg/40 hover:border-line-hover hover:bg-card-hover ${SPANS[i % SPANS.length]} flex ${
               WIDE.has(SPANS[i % SPANS.length]) ? "md:flex-row" : ""
             }`}
           >
@@ -379,7 +418,7 @@ export default function Projects({ onClose }: { onClose: () => void }) {
           href="https://github.com/KoZsombat"
           target="_blank"
           rel="noreferrer"
-          className="group flex flex-col justify-between gap-2 rounded-xl border border-line bg-card p-4 transition-colors hover:border-line-hover hover:bg-card-hover md:col-span-2"
+          className="group flex flex-col justify-between gap-2 rounded-xl border border-line bg-card p-4 outline-none transition-colors focus-visible:border-fg focus-visible:ring-2 focus-visible:ring-fg/40 hover:border-line-hover hover:bg-card-hover md:col-span-2"
         >
           <p className="font-mono text-xs tracking-wider text-fg-faint uppercase">
             More
