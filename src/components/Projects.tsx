@@ -295,15 +295,6 @@ export default function Projects({ onClose }: { onClose: () => void }) {
     (grid.current?.children[0] as HTMLElement | undefined)?.focus();
   }, []);
 
-  // Esc goes back to the previous view (the dialog handles its own Esc).
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && !selected) onClose();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [selected, onClose]);
-
   // Arrow keys move focus across the bento grid (rows: 0-1, 2-3, 4-link).
   const onGridKey = (e: React.KeyboardEvent) => {
     const items = Array.from(grid.current?.children ?? []) as HTMLElement[];

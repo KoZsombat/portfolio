@@ -49,6 +49,8 @@ function App() {
     );
   };
 
+  const [hideGrid, setHideGrid] = useState(false);
+
   const closeProjects = () => {
     if (phase !== "open") return;
     // The home cards are out of layout while expanded; bring them back first
@@ -91,12 +93,9 @@ function App() {
 
   // Once expanded, take the home cards out of layout so the page is only as
   // tall as the projects view.
-  const [hideGrid, setHideGrid] = useState(false);
   useEffect(() => {
-    if (phase !== "open") {
-      setHideGrid(false);
-      return;
-    }
+    // closeProjects() resets hideGrid, so only the "open" case needs handling.
+    if (phase !== "open") return;
     const t = window.setTimeout(() => setHideGrid(true), 480);
     return () => window.clearTimeout(t);
   }, [phase]);
@@ -169,7 +168,7 @@ function App() {
                   Full-stack developer
                 </p>
                 <h1 className="text-5xl leading-[0.95] font-semibold tracking-tighter text-fg sm:text-6xl xl:text-7xl">
-                  Kovács Zsombor
+                  Zsombor Kovács
                 </h1>
               </Card>
               {BACKGROUND.map((group) => (
