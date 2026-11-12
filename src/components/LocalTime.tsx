@@ -65,27 +65,27 @@ export default function LocalTime() {
 
   return (
     <div className="flex h-full flex-col font-mono">
-      <div className="flex justify-between text-xs tracking-wider text-fg-faint uppercase">
+      <div className="flex justify-between text-xs tracking-wider text-text-label uppercase">
         <p>Local time</p>
         <p>{describeDifference(difference)}</p>
       </div>
 
-      <div className="mt-5 text-sm text-fg-soft">Me · {MY_CITY}</div>
+      <div className="mt-5 text-sm text-text-muted">Me · {MY_CITY}</div>
       <div className="flex items-end justify-between">
-        <p className="font-sans text-3xl font-medium tracking-tight text-fg tabular-nums">
+        <p className="font-sans text-3xl font-medium tracking-tight text-accent tabular-nums">
           {mine}
         </p>
-        <p className="pb-1 text-sm text-fg-muted">my clock</p>
+        <p className="pb-1 text-sm text-text-muted">my clock</p>
       </div>
 
-      <hr className="my-5 border-line" />
+      <hr className="my-5 border-border" />
 
-      <div className="text-sm text-fg-soft">You · {visitorCity}</div>
+      <div className="text-sm text-text-muted">You · {visitorCity}</div>
       <div className="flex items-end justify-between">
-        <p className="font-sans text-3xl font-medium tracking-tight text-fg tabular-nums">
+        <p className="font-sans text-3xl font-medium tracking-tight text-text tabular-nums">
           {yours}
         </p>
-        <p className="pb-1 text-sm text-fg-muted">your clock</p>
+        <p className="pb-1 text-sm text-text-muted">your clock</p>
       </div>
     </div>
   );

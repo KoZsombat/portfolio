@@ -4,13 +4,14 @@ import TechBadge from "./TechBadge";
 import { PROJECTS } from "../lib/CONSTANTS";
 
 // Bento layout on a 6-column grid, three rows of equal height.
-// Row 1: 4 + 2, row 2: 2 + 4, row 3: 4 + 2 (GitHub link card).
+// Row 1: 4 + 2, row 2: 2 + 4, row 3: 4 + 2.
 const SPANS = [
   "md:col-span-4",
   "md:col-span-2",
   "md:col-span-2",
   "md:col-span-4",
   "md:col-span-4",
+  "md:col-span-2",
 ];
 
 const WIDE = new Set(["md:col-span-4"]);
@@ -42,7 +43,7 @@ function FitText({ children }: { children: string }) {
     <div ref={box} className="relative min-h-0 flex-1">
       <p
         ref={text}
-        className="absolute inset-x-0 top-0 leading-relaxed text-fg-muted"
+        className="absolute inset-x-0 top-0 leading-relaxed text-text-muted"
         style={{
           display: "-webkit-box",
           WebkitBoxOrient: "vertical",
@@ -77,10 +78,10 @@ function Carousel({ images, name }: { images: string[]; name: string }) {
   if (n === 0) return null;
 
   const arrow =
-    "absolute top-1/2 flex h-9 w-9 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-line-strong bg-card/80 text-fg backdrop-blur transition-colors hover:border-line-hover hover:bg-card";
+    "absolute top-1/2 flex h-9 w-9 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border border-border bg-card/80 text-text outline-none backdrop-blur transition-colors hover:border-accent/60 hover:bg-accent/10 hover:text-accent focus-visible:ring-2 focus-visible:ring-text/40";
 
   return (
-    <div className="relative h-72 shrink-0 border-b border-line bg-thumb">
+    <div className="relative h-72 shrink-0 border-b border-border bg-bg">
       <img
         key={i}
         src={images[i]}
@@ -112,8 +113,8 @@ function Carousel({ images, name }: { images: string[]; name: string }) {
                 type="button"
                 aria-label={`Show image ${d + 1}`}
                 onClick={() => setI(d)}
-                className={`h-1.5 cursor-pointer rounded-full transition-all ${
-                  d === i ? "w-5 bg-fg" : "w-1.5 bg-fg-faint hover:bg-fg-muted"
+                className={`h-1.5 cursor-pointer rounded-full outline-none transition-all focus-visible:ring-2 focus-visible:ring-text/40 ${
+                  d === i ? "w-5 bg-text" : "w-1.5 bg-text-label hover:bg-accent"
                 }`}
               />
             ))}
@@ -205,7 +206,7 @@ function ProjectDialog({
       onClick={(e) => {
         if (e.target === e.currentTarget) requestClose();
       }}
-      className="m-auto max-h-[85vh] w-[min(44rem,calc(100%-2rem))] overflow-hidden rounded-xl border border-line bg-card p-0 text-fg backdrop:bg-black/60 backdrop:backdrop-blur-sm"
+      className="m-auto max-h-[85vh] w-[min(44rem,calc(100%-2rem))] overflow-hidden rounded-xl border border-border bg-card p-0 text-text backdrop:bg-bg/70 backdrop:backdrop-blur-sm"
     >
       <div className="flex max-h-[85vh] flex-col overflow-y-auto">
         <Carousel images={project.images} name={project.name} />
@@ -219,7 +220,7 @@ function ProjectDialog({
               onClick={requestClose}
               autoFocus
               aria-label="Close"
-              className="cursor-pointer rounded-chip border border-line-strong px-3 py-1 font-mono text-xs text-fg-muted transition-colors hover:border-line-hover hover:text-fg"
+              className="cursor-pointer rounded-chip border border-border px-3 py-1 font-mono text-xs text-text-muted outline-none transition-colors hover:border-accent/60 hover:bg-accent/10 hover:text-accent focus-visible:ring-2 focus-visible:ring-text/40"
             >
               Close ✕
             </button>
@@ -234,20 +235,20 @@ function ProjectDialog({
           )}
 
           <div>
-            <p className="mb-1.5 font-mono text-xs tracking-wider text-fg-faint uppercase">
+            <p className="mb-1.5 font-mono text-xs tracking-wider text-text-label uppercase">
               What it does
             </p>
-            <p className="leading-relaxed text-fg-muted">
+            <p className="leading-relaxed text-text-muted">
               {project.description}
             </p>
           </div>
 
           {project.role && (
             <div>
-              <p className="mb-1.5 font-mono text-xs tracking-wider text-fg-faint uppercase">
+              <p className="mb-1.5 font-mono text-xs tracking-wider text-text-label uppercase">
                 What I did
               </p>
-              <p className="leading-relaxed text-fg-muted">{project.role}</p>
+              <p className="leading-relaxed text-text-muted">{project.role}</p>
             </div>
           )}
 
@@ -258,7 +259,7 @@ function ProjectDialog({
                   href={project.repo}
                   target="_blank"
                   rel="noreferrer"
-                  className="rounded-chip border border-line-strong px-3 py-1 text-fg transition-colors hover:border-line-hover"
+                  className="rounded-chip border border-border px-3 py-1 text-text outline-none transition-colors hover:border-accent/60 hover:bg-accent/10 hover:text-accent focus-visible:ring-2 focus-visible:ring-text/40"
                 >
                   GitHub ↗
                 </a>
@@ -268,7 +269,7 @@ function ProjectDialog({
                   href={liveHref}
                   target="_blank"
                   rel="noreferrer"
-                  className="rounded-chip border border-line-strong px-3 py-1 text-fg transition-colors hover:border-line-hover"
+                  className="rounded-chip border border-border px-3 py-1 text-text outline-none transition-colors hover:border-accent/60 hover:bg-accent/10 hover:text-accent focus-visible:ring-2 focus-visible:ring-text/40"
                 >
                   Live ↗
                 </a>
@@ -295,7 +296,7 @@ export default function Projects({ onClose }: { onClose: () => void }) {
     (grid.current?.children[0] as HTMLElement | undefined)?.focus();
   }, []);
 
-  // Arrow keys move focus across the bento grid (rows: 0-1, 2-3, 4-link).
+  // Arrow keys move focus across the bento grid (rows: 0-1, 2-3, 4-5).
   const onGridKey = (e: React.KeyboardEvent) => {
     const items = Array.from(grid.current?.children ?? []) as HTMLElement[];
     const cur = items.indexOf(document.activeElement as HTMLElement);
@@ -315,7 +316,7 @@ export default function Projects({ onClose }: { onClose: () => void }) {
   };
 
   const backClass =
-    "group flex items-center justify-center gap-3 rounded-xl border border-line bg-card px-4 py-4 text-3xl leading-none font-semibold tracking-tight text-fg-muted transition-colors hover:border-line-hover hover:bg-card-hover hover:text-fg sm:text-4xl";
+    "group flex items-center justify-center gap-3 rounded-xl border border-border bg-card px-4 py-4 text-3xl leading-none font-semibold tracking-tight text-text-muted outline-none transition hover:border-accent/60 hover:bg-accent/5 hover:text-accent focus-visible:ring-2 focus-visible:ring-text/40 sm:text-4xl";
   const backInner = (
     <>
       <span
@@ -329,15 +330,18 @@ export default function Projects({ onClose }: { onClose: () => void }) {
   );
   return (
     <div className="flex flex-col gap-4">
-      <div className="grid grid-cols-3 gap-4">
+      <div
+        className="view-rise grid grid-cols-3 gap-4"
+        style={{ animationDelay: "120ms" }}
+      >
         <button type="button" onClick={onClose} className={backClass}>
           {backInner}
         </button>
-        <Card className="col-span-2 flex items-center justify-between gap-4 px-6! py-4!">
-          <h1 className="text-3xl leading-none font-semibold tracking-tight text-fg sm:text-4xl">
+        <Card className="col-span-2 flex items-center justify-between gap-4 px-6! py-4! hover:border-border-hover">
+          <h1 className="text-3xl leading-none font-semibold tracking-tight text-text sm:text-4xl">
             Projects
           </h1>
-          <span className="rounded-chip border border-line-strong px-2.5 py-0.5 font-mono text-xs text-fg-muted">
+          <span className="rounded-chip border border-border px-2.5 py-0.5 font-mono text-xs text-text-muted">
             {PROJECTS.length} projects
           </span>
         </Card>
@@ -360,12 +364,13 @@ export default function Projects({ onClose }: { onClose: () => void }) {
                 open(p, e.currentTarget);
               }
             }}
-            className={`cursor-pointer flex-col overflow-hidden p-0! outline-none transition-colors focus-visible:border-fg focus-visible:bg-card-hover focus-visible:ring-2 focus-visible:ring-fg/40 hover:border-line-hover hover:bg-card-hover ${SPANS[i % SPANS.length]} flex ${
+            className={`view-rise group cursor-pointer flex-col overflow-hidden p-0! outline-none transition hover:-translate-y-1 hover:border-accent/60 hover:bg-accent/5 hover:shadow-lift focus-visible:ring-2 focus-visible:ring-text/40 ${SPANS[i % SPANS.length]} flex ${
               WIDE.has(SPANS[i % SPANS.length]) ? "md:flex-row" : ""
             }`}
+            style={{ animationDelay: `${170 + i * 30}ms` }}
           >
             <div
-              className={`shrink-0 overflow-hidden border-b border-line md:border-b-0 ${
+              className={`shrink-0 overflow-hidden border-b border-border md:border-b-0 ${
                 WIDE.has(SPANS[i % SPANS.length])
                   ? "h-1/4 min-h-12 md:h-auto md:w-1/3 md:border-r"
                   : "h-1/4 min-h-12 md:border-b"
@@ -376,22 +381,22 @@ export default function Projects({ onClose }: { onClose: () => void }) {
                   src={p.images[0]}
                   alt={`${p.name} preview`}
                   loading="lazy"
-                  className="h-full w-full object-cover object-top"
+                  className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]"
                 />
               ) : (
-                <div className="flex h-full w-full items-center justify-center bg-card-hover font-mono text-sm tracking-wider text-fg-faint">
+                <div className="flex h-full w-full items-center justify-center bg-bg font-mono text-sm tracking-wider text-text-label">
                   {p.name}
                 </div>
               )}
             </div>
             <div className="flex min-h-0 flex-1 flex-col gap-2 p-4">
               <div className="flex items-baseline justify-between gap-3">
-                <h2 className="truncate text-2xl font-semibold tracking-tight text-fg">
+                <h2 className="truncate text-2xl font-semibold tracking-tight text-text">
                   {p.name}
                 </h2>
                 <span
                   aria-hidden
-                  className="shrink-0 font-mono text-xs text-fg-faint"
+                  className="shrink-0 font-mono text-xs text-text-label transition-[color,translate] group-hover:translate-x-0.5 group-hover:text-accent"
                 >
                   Details ↗
                 </span>
@@ -405,25 +410,6 @@ export default function Projects({ onClose }: { onClose: () => void }) {
             </div>
           </Card>
         ))}
-        <a
-          href="https://github.com/KoZsombat"
-          target="_blank"
-          rel="noreferrer"
-          className="group flex flex-col justify-between gap-2 rounded-xl border border-line bg-card p-4 outline-none transition-colors focus-visible:border-fg focus-visible:ring-2 focus-visible:ring-fg/40 hover:border-line-hover hover:bg-card-hover md:col-span-2"
-        >
-          <p className="font-mono text-xs tracking-wider text-fg-faint uppercase">
-            More
-          </p>
-          <p className="flex items-end justify-between text-xl font-semibold tracking-tight text-fg">
-            GitHub
-            <span
-              aria-hidden
-              className="text-fg-faint transition-[color,translate] group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-fg"
-            >
-              ↗
-            </span>
-          </p>
-        </a>
       </div>
       {selected && (
         <ProjectDialog

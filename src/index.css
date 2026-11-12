@@ -1,34 +1,29 @@
 @import "tailwindcss";
 
+/* Palette sampled from the supplied swatch strip.
+   Surfaces and text are the strip's blue-grey neutrals (#0b1019 backdrop,
+   #65738c / #71717a / #737373) darkened for a dark UI; the single accent is
+   the exact olive swatch, #7c7c69. */
 @theme {
-  /* Backgrounds, darkest to lightest.
-     Use as bg-page, bg-card, bg-card-hover, bg-thumb. */
-  --color-page: #171717; /* page behind everything (neutral-900) */
-  --color-card: #1f1f1f; /* cards */
-  --color-card-hover: #242424; /* cards while hovered */
-  --color-thumb: #262626; /* project thumbnail areas (neutral-800) */
+  /* Surfaces */
+  --color-bg: #0b1019; /* page */
+  --color-card: #161f2f; /* cards */
 
-  /* Borders and dividers, faintest to most visible.
-     Use as border-line, border-line-strong, etc. */
-  --color-line: #2c2c2c; /* card borders, dividers, progress bar track */
-  --color-line-strong: #333333; /* tag and email-field borders */
-  --color-line-hover: #525252; /* any border while hovered, checkboxes (neutral-600) */
-  --color-line-on-light: #c4c4c4; /* input borders inside the light card */
+  /* Borders */
+  --color-border: #2a374e; /* card, chip and divider borders */
+  --color-border-hover: #3d4c68; /* neutral hover borders */
 
-  /* Text on dark backgrounds, most to least prominent.
-     Use as text-fg, text-fg-soft, text-fg-muted, text-fg-faint. */
-  --color-fg: #f5f5f5; /* headings and body text; also the light card's fill (neutral-100) */
-  --color-fg-soft: #d4d4d4; /* slightly toned-down body text (neutral-300) */
-  --color-fg-muted: #a3a3a3; /* descriptions, secondary info (neutral-400) */
-  --color-fg-faint: #8a8a8a; /* labels, captions, small print */
-  --color-white: #ffffff;
+  /* Text */
+  --color-text: #eef0f4; /* primary text */
+  --color-text-muted: #b0b7c4; /* body and secondary text */
+  --color-text-label: #929aa9; /* small uppercase mono labels */
 
-  /* Text inside the light card (dark on light). */
-  --color-on-light: #171717; /* main text */
-  --color-on-light-muted: #525252; /* secondary text */
+  /* One accent: the olive swatch, lifted so it stays the noticeable colour. */
+  --color-accent: #b0b192;
 
-  /* Decorative shapes drawn inside thumbnails (neutral-200). */
-  --color-pattern: #e5e5e5;
+  /* Soft accent halo under lifted cards. */
+  --shadow-lift: 0 18px 40px -24px
+    color-mix(in srgb, var(--color-accent) 45%, transparent);
 
   --font-sans: "Geist", system-ui, sans-serif;
   --font-mono: "Geist Mono", ui-monospace, monospace;
@@ -39,11 +34,29 @@
 }
 
 :root {
-  background-color: var(--color-page);
+  background-color: var(--color-bg);
   background-image: radial-gradient(
-    rgb(255 255 255 / 0.055) 1px,
+    color-mix(in srgb, var(--color-text) 6%, transparent) 1px,
     transparent 1px
   );
   background-size: 22px 22px;
-  color: var(--color-fg);
+  color: var(--color-text);
+}
+
+/* Staggered entrance for the projects view. */
+@keyframes view-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+.view-rise {
+  animation: view-rise 0.4s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .view-rise {
+    animation: none;
+  }
 }

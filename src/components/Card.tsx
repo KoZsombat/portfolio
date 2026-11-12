@@ -5,7 +5,7 @@ export default function Card({
 }: React.ComponentProps<"div">) {
   return (
     <div
-      className={`rounded-xl border border-line bg-card p-6 ${className}`}
+      className={`rounded-xl border border-border bg-card p-6 transition duration-150 ${className}`}
       {...rest}
     >
       {children}

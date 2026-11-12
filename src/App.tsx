@@ -7,63 +7,29 @@ import { useEffect, useRef, useState } from "react";
 import { STACK, SOCIALS, BACKGROUND } from "./lib/CONSTANTS";
 
 type Phase = "closed" | "opening" | "open" | "closing";
-type Box = { top: number; left: number; width: number; height: number };
 
 function App() {
   const [phase, setPhase] = useState<Phase>("closed");
-  const [from, setFrom] = useState<Box | null>(null);
-  const [area, setArea] = useState({ width: 0, height: 0 });
-  const mainRef = useRef<HTMLElement>(null);
-  const triggerRef = useRef<HTMLButtonElement>(null);
+  const [areaHeight, setAreaHeight] = useState(0);
+  const [hideGrid, setHideGrid] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  // The trigger's box, relative to <main>, which the overlay is anchored to.
-  const measureFrom = (): Box | null => {
-    if (!mainRef.current || !triggerRef.current) return null;
-    const m = mainRef.current.getBoundingClientRect();
-    const t = triggerRef.current.getBoundingClientRect();
-    return {
-      top: t.top - m.top,
-      left: t.left - m.left,
-      width: t.width,
-      height: t.height,
-    };
-  };
-
   const openProjects = () => {
-    const box = measureFrom();
-    if (!box || !mainRef.current) return;
-    setFrom(box);
-    setArea({ width: mainRef.current.offsetWidth, height: 0 });
+    if (phase !== "closed") return;
     setPhase("opening");
-    requestAnimationFrame(() =>
-      requestAnimationFrame(() => {
-        if (!mainRef.current) return;
-        setArea({
-          width: mainRef.current.offsetWidth,
-          height:
-            contentRef.current?.offsetHeight ?? mainRef.current.offsetHeight,
-        });
-        setPhase("open");
-      }),
-    );
+    window.setTimeout(() => {
+      setHideGrid(true);
+      setPhase("open");
+    }, 110);
   };
-
-  const [hideGrid, setHideGrid] = useState(false);
 
   const closeProjects = () => {
     if (phase !== "open") return;
-    // The home cards are out of layout while expanded; bring them back first
-    // so the trigger has a real position to shrink into.
-    setHideGrid(false);
-    requestAnimationFrame(() =>
-      requestAnimationFrame(() => {
-        const box = measureFrom();
-        if (box && box.width > 0) setFrom(box);
-        setPhase("closing");
-        window.setTimeout(() => setPhase("closed"), 450);
-      }),
-    );
+    setPhase("closing");
+    window.setTimeout(() => {
+      setHideGrid(false);
+      requestAnimationFrame(() => setPhase("closed"));
+    }, 110);
   };
 
   useEffect(() => {
@@ -76,79 +42,47 @@ function App() {
     return () => window.removeEventListener("keydown", onKey);
   });
 
-  // Keep the expanded area exactly as tall as the projects content.
+  // Track the projects view's height while it is mounted so the page reserves
+  // exactly that much room once the home cards are taken out of layout.
+  const mounted = phase !== "closed";
   useEffect(() => {
-    if (phase !== "open" || !contentRef.current || !mainRef.current) return;
+    if (!mounted) return;
     const content = contentRef.current;
-    const update = () =>
-      setArea((a) => ({
-        ...a,
-        height: content.offsetHeight,
-      }));
+    if (!content) return;
+    const update = () => setAreaHeight(content.offsetHeight);
     update();
     const ro = new ResizeObserver(update);
     ro.observe(content);
     return () => ro.disconnect();
-  }, [phase]);
-
-  // Once expanded, take the home cards out of layout so the page is only as
-  // tall as the projects view.
-  useEffect(() => {
-    // closeProjects() resets hideGrid, so only the "open" case needs handling.
-    if (phase !== "open") return;
-    const t = window.setTimeout(() => setHideGrid(true), 480);
-    return () => window.clearTimeout(t);
-  }, [phase]);
+  }, [mounted]);
 
   const expanded = phase === "open";
-  const ease = "cubic-bezier(.2,.8,.2,1)";
+  const ease = "cubic-bezier(.16,1,.3,1)";
 
   return (
     <div className="min-h-screen">
       <div className="mx-auto w-full px-4 pb-10 sm:px-6 xl:w-3/5 xl:px-0">
         <Header />
         <main
-          ref={mainRef}
           className="relative"
           style={{
-            minHeight: expanded ? area.height + 2 : undefined,
-            transition: `min-height .45s ${ease}`,
+            minHeight: phase !== "closed" ? areaHeight : undefined,
+            transition: `min-height .35s ${ease}`,
           }}
         >
-          {phase !== "closed" && from && (
+          {phase !== "closed" && (
             <div
-              className="absolute z-50 overflow-hidden border"
-              style={{
-                top: expanded ? 0 : from.top,
-                left: expanded ? 0 : from.left,
-                width: expanded ? "100%" : from.width,
-                height: expanded ? area.height + 2 : from.height, // +2 for the border
-                borderRadius: 12,
-                backgroundColor: expanded ? "transparent" : "var(--color-card)",
-                borderColor: expanded ? "transparent" : "var(--color-line)",
-                transition: `top .45s ${ease}, left .45s ${ease}, width .45s ${ease}, height .45s ${ease}, background-color .45s, border-color .45s`,
-              }}
+              className="absolute top-0 left-0 z-50 w-full"
+              style={{ pointerEvents: expanded ? "auto" : "none" }}
             >
               <div
-                className="absolute inset-0 flex flex-col p-6 transition-opacity duration-200"
-                style={{ opacity: expanded ? 0 : 1 }}
-                aria-hidden
-              >
-                <p className="text-4xl leading-[0.9] font-semibold tracking-tighter text-fg sm:text-5xl">
-                  Projects
-                </p>
-                <p className="mt-auto max-w-lg pt-4 leading-relaxed text-fg-muted">
-                  Pinned and recent work from my GitHub.
-                </p>
-              </div>
-              <div
                 ref={contentRef}
-                className="absolute top-0 left-0 transition-opacity duration-300"
                 style={{
-                  width: Math.max(0, area.width - 2), // minus the overlay border
                   opacity: expanded ? 1 : 0,
-                  transitionDelay: expanded ? "0.25s" : "0s",
-                  pointerEvents: expanded ? "auto" : "none",
+                  transform: expanded
+                    ? "none"
+                    : "translateY(10px) scale(0.995)",
+                  transition: `opacity ${expanded ? ".3s" : ".12s"} ${ease}, transform .4s ${ease}`,
                 }}
               >
                 <Projects onClose={closeProjects} />
@@ -156,36 +90,38 @@ function App() {
             </div>
           )}
           <div
-            className="grid grid-cols-1 gap-4 transition-opacity duration-300 lg:grid-cols-9"
+            className="grid grid-cols-1 gap-4 transition-[opacity,transform] duration-100 lg:grid-cols-9"
             style={{
-              opacity: expanded ? 0 : 1,
+              opacity: phase === "closed" ? 1 : 0,
+              transform: phase === "closed" ? "none" : "scale(0.995)",
               display: hideGrid ? "none" : undefined,
             }}
           >
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:grid-rows-[1fr_auto] lg:col-span-6">
-              <Card className="flex flex-col justify-between gap-6 sm:col-span-2">
-                <p className="font-mono text-xs tracking-wider text-fg-faint uppercase">
+              <Card className="view-rise flex flex-col justify-between gap-6 hover:border-border-hover sm:col-span-2">
+                <p className="font-mono text-xs tracking-wider text-accent uppercase">
                   Full-stack developer
                 </p>
-                <h1 className="text-5xl leading-[0.95] font-semibold tracking-tighter text-fg sm:text-6xl xl:text-7xl">
+                <h1 className="text-5xl leading-[0.95] font-semibold tracking-tighter text-text sm:text-6xl xl:text-7xl">
                   Zsombor Kovács
                 </h1>
               </Card>
-              {BACKGROUND.map((group) => (
+              {BACKGROUND.map((group, i) => (
                 <Card
                   key={group.label}
-                  className="flex flex-col justify-between gap-6"
+                  className="view-rise flex flex-col justify-between gap-6 hover:border-border-hover"
+                  style={{ animationDelay: `${40 + i * 40}ms` }}
                 >
-                  <p className="font-mono text-xs tracking-wider text-fg-faint uppercase">
+                  <p className="font-mono text-xs tracking-wider text-text-label uppercase">
                     {group.label}
                   </p>
                   <div className="flex flex-col gap-4">
                     {group.items.map((item) => (
                       <div key={item.title} className="flex flex-col gap-0.5">
-                        <p className="text-xl leading-tight font-semibold tracking-tight text-balance text-fg">
+                        <p className="text-xl leading-tight font-semibold tracking-tight text-balance text-text">
                           {item.title}
                         </p>
-                        <p className="text-sm text-fg-muted sm:text-base">
+                        <p className="text-sm text-text-muted sm:text-base">
                           {item.meta}
                         </p>
                       </div>
@@ -194,82 +130,90 @@ function App() {
                 </Card>
               ))}
             </div>
-            <Card className="lg:col-span-3">
-              <div className="flex justify-between font-mono text-xs tracking-wider text-fg-faint uppercase">
+            <Card
+              className="view-rise hover:border-border-hover lg:col-span-3"
+              style={{ animationDelay: "60ms" }}
+            >
+              <div className="flex justify-between font-mono text-xs tracking-wider text-text-label uppercase">
                 <p>Stack &amp; tools</p>
                 <p>Daily drivers</p>
               </div>
               <div className="mt-4 flex flex-col gap-3.5">
                 {STACK.map((group) => (
                   <div key={group.label}>
-                    <p className="mb-1.5 text-xs text-fg-muted">
+                    <p className="mb-1.5 text-xs text-text-muted">
                       {group.label}
                     </p>
                     <div className="flex flex-wrap gap-1.5">
                       {group.items.map((item) => (
-                        <TechBadge
-                          key={item}
-                          name={item}
-                          colored={group.label === "Languages"}
-                        />
+                        <TechBadge key={item} name={item} />
                       ))}
                     </div>
                   </div>
                 ))}
               </div>
             </Card>
-            <Card className="lg:col-span-3">
+            <Card
+              className="view-rise hover:border-border-hover lg:col-span-3"
+              style={{ animationDelay: "100ms" }}
+            >
               <LocalTime />
             </Card>
             <div className="grid grid-cols-1 gap-4 lg:col-span-6 lg:grid-cols-6 lg:grid-rows-[auto_1fr]">
-              {SOCIALS.map((social) => (
-                <Card key={social.name} className="p-4! lg:col-span-2">
+              {SOCIALS.map((social, i) => (
+                <Card
+                  key={social.name}
+                  className="view-rise group p-4! hover:-translate-y-1 hover:border-accent/60 hover:bg-accent/5 hover:shadow-lift lg:col-span-2"
+                  style={{ animationDelay: `${80 + i * 40}ms` }}
+                >
                   <a
                     href={social.href}
                     target={
                       social.href.startsWith("mailto:") ? undefined : "_blank"
                     }
                     rel="noreferrer"
-                    className="group flex flex-col gap-1"
+                    className="flex flex-col gap-1 outline-none focus-visible:ring-2 focus-visible:ring-text/40"
                   >
                     <div className="flex items-start justify-between">
-                      <p className="font-semibold text-fg">{social.name}</p>
+                      <p className="font-semibold text-text">{social.name}</p>
                       <span
                         aria-hidden
-                        className="transition-[translate] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                        style={{ color: social.color }}
+                        className="text-text-label transition-[color,translate] group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-accent"
                       >
                         ↗
                       </span>
                     </div>
-                    <p
-                      className="truncate font-mono text-sm"
-                      style={{ color: social.color }}
-                    >
+                    <p className="truncate font-mono text-sm text-accent">
                       {social.handle}
                     </p>
                   </a>
                 </Card>
               ))}
-              <Card className="p-0! lg:col-span-6">
+              <Card
+                className="view-rise group overflow-hidden p-0! hover:border-accent/60 hover:bg-accent/5 hover:shadow-lift has-[button:focus-visible]:ring-2 has-[button:focus-visible]:ring-text/40 lg:col-span-6"
+                style={{
+                  animationDelay: "200ms",
+                  backgroundImage:
+                    "radial-gradient(120% 120% at 100% 0%, color-mix(in srgb, var(--color-accent) 5%, transparent), transparent 60%)",
+                }}
+              >
                 <button
-                  ref={triggerRef}
                   type="button"
                   onClick={openProjects}
-                  className="group flex h-full w-full cursor-pointer flex-col p-6 text-left transition-colors hover:bg-card-hover rounded-xl"
+                  className="flex h-full w-full cursor-pointer flex-col p-6 text-left outline-none"
                 >
                   <div className="flex items-start justify-between">
-                    <p className="text-4xl leading-[0.9] font-semibold tracking-tighter text-fg sm:text-5xl">
+                    <p className="text-4xl leading-[0.9] font-semibold tracking-tighter text-text sm:text-5xl">
                       Projects
                     </p>
                     <span
                       aria-hidden
-                      className="text-xl text-fg-faint transition-[color,translate] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-fg"
+                      className="text-xl text-accent transition-[translate] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                     >
                       ↗
                     </span>
                   </div>
-                  <p className="mt-auto max-w-lg pt-4 leading-relaxed text-fg-muted">
+                  <p className="mt-auto max-w-lg pt-4 leading-relaxed text-text-muted">
                     Pinned and recent work from my GitHub.
                   </p>
                 </button>

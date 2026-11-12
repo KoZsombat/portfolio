@@ -1,10 +1,19 @@
 // Resolves a public/ file against the deploy base (e.g. /portfolio/ on GitHub Pages).
 const asset = (p: string) => `${import.meta.env.BASE_URL}${p}`;
 
+const LANGUAGES = [
+  "JavaScript",
+  "TypeScript",
+  "Python",
+  "Go",
+  "C#",
+  "Rust",
+];
+
 export const STACK = [
   {
     label: "Languages",
-    items: ["JavaScript", "TypeScript", "Python", "Go", "C#", "Rust"],
+    items: LANGUAGES,
   },
   {
     label: "Frontend",
@@ -27,19 +36,16 @@ export const STACK = [
 export const SOCIALS = [
   {
     name: "GitHub",
-    color: "#bc8cff",
     href: "https://github.com/kozsombat",
     handle: "@kozsombat",
   },
   {
     name: "LinkedIn",
-    color: "#70b5f9",
     href: "https://www.linkedin.com/in/zsombor--kovacs/",
     handle: "in/zsombor--kovacs",
   },
   {
     name: "Email",
-    color: "#f28b82",
     href: "mailto:kovacszsombor1234@gmail.com",
     handle: "kovacszsombor1234@gmail.com",
   },
@@ -95,6 +101,16 @@ export const PROJECTS = [
     repo: "https://github.com/give-go-2026/give-go",
     live: "https://givego.hu",
   },
+  {
+    name: "petrik.hu",
+    images: [],
+    description:
+      "The new website for my school, Petrik Lajos Technical School: an Astro SSR public site with news, teacher profiles and a document library, backed by a Bun and Hono API over PostgreSQL and run through a React admin with granular permissions, a review workflow and a media library. Built with AI: I made every architectural decision, and I mentored it the whole way.",
+    role: "Built the whole stack end to end: the Drizzle schema, the API and auth, the Astro site, the React admin, the WordPress content migration and the Docker deployment.",
+    tags: ["TypeScript", "Astro", "Bun", "Hono", "React 19"],
+    repo: "https://github.com/KoZsombat/petrikhu",
+    live: "",
+  },
 ];
 
 export const BACKGROUND = [
@@ -111,8 +127,8 @@ export const BACKGROUND = [
     label: "Awards",
     items: [
       {
-        title: "EuroSkills 2027 — National Selection",
-        meta: "Qualified for the National Finals",
+        title: "EuroSkills 2027 — Web Technologies",
+        meta: "3rd place at the National Finals",
       },
     ],
   },
