@@ -163,7 +163,7 @@ function App() {
               {SOCIALS.map((social, i) => (
                 <Card
                   key={social.name}
-                  className="view-rise group p-4! hover:-translate-y-1 hover:border-accent/60 hover:bg-accent/5 hover:shadow-lift lg:col-span-2"
+                  className="view-rise group p-4! hover:border-accent/60 hover:bg-accent/[0.08] lg:col-span-2"
                   style={{ animationDelay: `${80 + i * 40}ms` }}
                 >
                   <a
@@ -178,7 +178,7 @@ function App() {
                       <p className="font-semibold text-text">{social.name}</p>
                       <span
                         aria-hidden
-                        className="text-text-label transition-[color,translate] group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-accent"
+                        className="text-text-label transition-[color,translate] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent"
                       >
                         ↗
                       </span>
@@ -190,7 +190,7 @@ function App() {
                 </Card>
               ))}
               <Card
-                className="view-rise group overflow-hidden p-0! hover:border-accent/60 hover:bg-accent/5 hover:shadow-lift has-[button:focus-visible]:ring-2 has-[button:focus-visible]:ring-text/40 lg:col-span-6"
+                className="view-rise group overflow-hidden p-0! hover:border-accent/60 hover:bg-accent/[0.08] has-[button:focus-visible]:ring-2 has-[button:focus-visible]:ring-text/40 lg:col-span-6"
                 style={{
                   animationDelay: "200ms",
                   backgroundImage:

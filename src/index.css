@@ -21,12 +21,9 @@
   /* One accent: the olive swatch, lifted so it stays the noticeable colour. */
   --color-accent: #b0b192;
 
-  /* Soft accent halo under lifted cards. */
-  --shadow-lift: 0 18px 40px -24px
-    color-mix(in srgb, var(--color-accent) 45%, transparent);
-
-  --font-sans: "Geist", system-ui, sans-serif;
-  --font-mono: "Geist Mono", ui-monospace, monospace;
+  /* Self-hosted via @fontsource; imported in main.tsx. */
+  --font-sans: "Instrument Sans Variable", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
 
   /* Corner rounding. Use as rounded-card, rounded-chip. */
   --radius-card: 20px; /* cards */

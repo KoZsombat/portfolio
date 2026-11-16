@@ -220,7 +220,7 @@ function ProjectDialog({
               onClick={requestClose}
               autoFocus
               aria-label="Close"
-              className="cursor-pointer rounded-chip border border-border px-3 py-1 font-mono text-xs text-text-muted outline-none transition-colors hover:border-accent/60 hover:bg-accent/10 hover:text-accent focus-visible:ring-2 focus-visible:ring-text/40"
+              className="cursor-pointer rounded-chip border border-border px-3 py-1 font-mono text-xs text-text-muted outline-none transition-colors hover:border-accent/60 hover:bg-accent/10 hover:text-text focus-visible:ring-2 focus-visible:ring-text/40"
             >
               Close ✕
             </button>
@@ -316,12 +316,12 @@ export default function Projects({ onClose }: { onClose: () => void }) {
   };
 
   const backClass =
-    "group flex items-center justify-center gap-3 rounded-xl border border-border bg-card px-4 py-4 text-3xl leading-none font-semibold tracking-tight text-text-muted outline-none transition hover:border-accent/60 hover:bg-accent/5 hover:text-accent focus-visible:ring-2 focus-visible:ring-text/40 sm:text-4xl";
+    "group flex items-center justify-center gap-3 rounded-xl border border-border bg-card px-4 py-4 text-3xl leading-none font-semibold tracking-tight text-text-muted outline-none transition-colors hover:border-accent/60 hover:bg-accent/10 hover:text-text focus-visible:ring-2 focus-visible:ring-text/40 sm:text-4xl";
   const backInner = (
     <>
       <span
         aria-hidden
-        className="leading-none transition-transform group-hover:-translate-x-1"
+        className="leading-none transition-transform group-hover:-translate-x-0.5"
       >
         ←
       </span>
@@ -364,7 +364,7 @@ export default function Projects({ onClose }: { onClose: () => void }) {
                 open(p, e.currentTarget);
               }
             }}
-            className={`view-rise group cursor-pointer flex-col overflow-hidden p-0! outline-none transition hover:-translate-y-1 hover:border-accent/60 hover:bg-accent/5 hover:shadow-lift focus-visible:ring-2 focus-visible:ring-text/40 ${SPANS[i % SPANS.length]} flex ${
+            className={`view-rise group cursor-pointer flex-col overflow-hidden p-0! outline-none transition-colors hover:border-accent/60 hover:bg-accent/[0.08] focus-visible:ring-2 focus-visible:ring-text/40 ${SPANS[i % SPANS.length]} flex ${
               WIDE.has(SPANS[i % SPANS.length]) ? "md:flex-row" : ""
             }`}
             style={{ animationDelay: `${170 + i * 30}ms` }}
@@ -381,7 +381,7 @@ export default function Projects({ onClose }: { onClose: () => void }) {
                   src={p.images[0]}
                   alt={`${p.name} preview`}
                   loading="lazy"
-                  className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]"
+                  className="h-full w-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.03]"
                 />
               ) : (
                 <div className="flex h-full w-full items-center justify-center bg-bg font-mono text-sm tracking-wider text-text-label">
